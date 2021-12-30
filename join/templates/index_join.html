@@ -1,0 +1,24 @@
+Join tabel
+1. Kelamin (l, p)
+2. Anak (foreign key kelamin, foreign key orang tua)
+3. Orang tua
+
+<br>
+lihat kelamin
+{% for d in data.kelamin %}
+    <li>{{d.1}}</li>
+{% endfor %}
+
+<br>
+lihat orang tua
+{% for d in data.ortu %}
+    <li>{{d.1}}</li>
+{% endfor %}
+
+<br>
+lihat anak
+{% for d in data.anak %}
+<li>
+    <span>{{d.0}}, {{d.1}}, {{d.2}}</span>
+</li>
+{% endfor %}

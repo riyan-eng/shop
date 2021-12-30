@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Belajar Dasar Ajax dengan Fetch</title>
+</head>
+<body>
+    <h1>Tutorial Ajax dengan Fetch</h1>
+    <div id="dataProducts"></div>
+
+    <script>
+        var url = "{% url 'dataProducts' %}";
+        function fetchData(){
+            fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw Error("ERROR");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.data);
+                const html = data.data.map(product => {
+                    return `
+                    <p>Nama: ${product.product_name}<p>
+                    <p>Harga: ${product.product_price}<p>
+                    `
+                }).join('');
+                console.log(html)
+                document
+                .querySelector('#dataProducts').insertAdjacentHTML("afterbegin", html)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
+
+        fetchData()
+    </script>
+</body>
+</html>

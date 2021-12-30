@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div>
+        <form  method="get">
+            <input type="text" name="price" id="" required>
+            <input type="text" name="order" id="" required>
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <th>No</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Harga</th>
+                <th>Minimun order</th>
+            </thead>
+            <tbody>
+                {% for d in data %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{d.product_name}}</td>
+                    <td>{{d.product_category_name}}</td>
+                    <td>{{d.product_price}}</td>
+                    <td>{{d.product_minimum_order}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if data.has_other_pages %}
+                <ul class="pagination justify-content-center">
+                    {% if data.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="/filter/?page={{data.previous_page_number}}">
+                                <i class="fa fa-angle-left"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">
+                            <i class="fa fa-angle-left"></i>
+                            <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in data.paginator.page_range %}
+                        {% if data.number == i %}
+                            <li class="page-item active">
+                                <span class="page-link">{{i}}</span>
+                            </li>
+                        {% elif i > data.number|add:-10 and i < data.number|add:10 %}
+                            <li class="page-item">
+                                <a class="page-link" href="/filter/?page={{i}}">
+                                    {{i}}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if data.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="/filter/?page={{data.next_page_number}}">
+                                <i class="fa fa-angle-right"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">
+                                <i class="fa fa-angle-right"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
